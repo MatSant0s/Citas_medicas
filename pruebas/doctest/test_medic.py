@@ -74,7 +74,98 @@ def create_medic(medic: Medic):
 
     db.add(new_medic)
     db.commit()
-
     return medic.dict()
     """
+
+#----------------------------------------------------------------------------------------------------
+def update_medic(medic):
+    """
+    Función que actualiza los datos de un médico.
+
+    Args:
+        medic: Los datos del médico a actualizar.
+
+    Returns:
+        None
+
+> update_medic({'name': 'Mateo Santos', 'specialty': 'Cardiology'})
+>     """
+>     #return
+> 
+> def patch_medic(medic: UpdateMedic):
+>     """
+>     Función que actualiza los datos de un médico existente.
+> 
+>     Args:
+>         medic (UpdateMedic): Un objeto de tipo UpdateMedic con los datos a actualizar.
+> 
+>     Returns:
+>         JSONResponse: Un objeto JSONResponse con el resultado de la actualización.
+> 
+>     >>> patch_medic(UpdateMedic(id=1, name="Mateo Santos", specialty="Cardiology"))
+>     JSONResponse(status_code=200, content={'id_medic': 1, 'name': 'Mateo Santos', 'specialty': 'Cardiology'})
+>     
+>     >>> patch_medic(UpdateMedic(id=999, name="Tobias Tello"))
+>     JSONResponse(status_code=404, content={'message': 'Medic not Found'})
+>     """  
+>     """
+>     db = Session()
+>     res = db.query(MedicModel).filter(MedicModel.id_medic == medic.id).first()
+> 
+>     if not res:
+>         return JSONResponse(status_code= status.HTTP_404_NOT_FOUND,
+>                 content= {"message": "Medic not Found"})
+> 
+>     medic_data = medic.dict(exclude_unset= True)
+> 
+>     for key, value in medic_data.items():
+>         setattr(res, key, value)
+> 
+>     result = res
+> 
+>     db.add(res)
+>     db.commit()
+>     db.refresh(res)
+> 
+>     return JSONResponse(status_code= status.HTTP_200_OK, content=jsonable_encoder(result))
+>     """
+> 
+> #----------------------------------------------------------------------------------------------------
+> def delete_medic(medic_id: int):
+>     """
+>     Función que elimina un médico por su ID.
+> 
+>     Args:
+>         medic_id (int): El ID del médico.
+> 
+>     Returns:
+>         JSONResponse: Un objeto JSONResponse con el resultado de la eliminación.
+> 
+>     >>> delete_medic(1)
+>     JSONResponse(status_code=200, content={'id_medic': 1})
+>     
+>     >>> delete_medic(999)
+>     JSONResponse(status_code=404, content={'message': 'Medic not Found'})
+>     """
+>     """
+>     db = Session()
+>     res = db.query(MedicModel).filter(MedicModel.id_medic == medic_id).first()
+> 
+>     if not res:
+>         return JSONResponse(status_code= status.HTTP_404_NOT_FOUND,
+>                 content= {"message": "Medic not Found"})
+>     
+>     result = res
+> 
+>     db.delete(res)
+>     db.commit()
+> 
+>     return JSONResponse(status_code= status.HTTP_200_OK, content= jsonable_encoder(result))
+>     """
+>     
+> #----------------------------------------------------------------------------------------------------
+> if __name__ == '__main__':
+>     import doctest
+>     print("\n--- Correcto!\n")
+>     doctest.testmod()
     
